@@ -1,7 +1,9 @@
+import Header from "@/components/shared/Header/Header";
+
 const WebLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       {children}
       {/* <Footer /> */}
     </div>

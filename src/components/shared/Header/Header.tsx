@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-
 import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -14,10 +13,28 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-
+import { NavItem } from "@/types/nav";
+import NavLink from "./NavLink";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navItems: NavItem[] = [
+    { label: "Home", href: "/" },
+    {
+      label: "Services",
+      children: [
+        { label: "Web Development", href: "#" },
+        { label: "App Development", href: "#" },
+        { label: "UI/UX Design", href: "#" },
+      ],
+    },
+    { label: "About", href: "#" },
+    { label: "Contact", href: "#" },
+    { label: "Login", href: "/login" },
+    { label: "Sign Up", href: "/signup" },
+  ];
+
   return (
     <div>
       <header className="w-full border-b bg-white shadow-sm">
@@ -99,7 +116,7 @@ const Header = () => {
                         {item.label}
                       </NavLink>
                     </li>
-                  ),
+                  )
                 )}
               </ul>
             </motion.div>
