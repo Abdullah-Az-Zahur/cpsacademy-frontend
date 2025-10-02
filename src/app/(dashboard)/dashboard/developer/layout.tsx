@@ -1,9 +1,11 @@
+import DeveloperSidebar from "@/components/Sidebars/DeveloperSidebar";
 import React from "react";
 
 function DeveloperLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex">
-      <div className="flex-1">
+      <DeveloperSidebar />
+      <div className="">
         <main className="p-6">{children}</main>
       </div>
     </div>
