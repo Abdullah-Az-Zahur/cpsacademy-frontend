@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function DeveloperDashboard() {
   return (
-    <div>DeveloperDashboard</div>
-  )
+    <div>
+      <h1 className="text-2xl font-bold">Developer Dashboard</h1>
+      <p>Welcome — show dev widgets here.</p>
+    </div>
+  );
 }
 
-export default DeveloperDashboard
+export default DeveloperDashboard;

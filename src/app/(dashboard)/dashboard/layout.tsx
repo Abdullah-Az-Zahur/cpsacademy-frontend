@@ -1,18 +1,22 @@
-import SessionProviderClient from "@/providers/SessionProviderClient";
+import { useAuth } from "@/lib/auth";
 import React from "react";
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <SessionProviderClient>
-      <div>
-        {/* Sidebar */}
-        <aside className="w-64 bg-gray-100 p-4">Sidebar here</aside>
+  const { user, loading } = useAuth;
 
-        {/* Main content */}
-        <main className="flex-1 p-6">{children}</main>
-      </div>
-    </SessionProviderClient>
-  );
+  if (loading) return <div className="p-6">Loading...</div>;
+  if (!user) return null;
+
+  switch (user.role) {
+    case "developer":
+      return 
+      break;
+  
+    default:
+      break;
+  }
+
+  return <div></div>;
 }
 
 export default DashboardLayout;
