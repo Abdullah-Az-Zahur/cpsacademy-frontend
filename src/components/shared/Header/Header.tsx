@@ -81,7 +81,12 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            {/* Auth buttons */}
+            {user && (
+              <Link href="/dashboard" className="px-3 py-1">
+                Dashboard
+              </Link>
+            )}
+
             {user ? (
               <Button variant="destructive" size="sm" onClick={logout}>
                 Logout
@@ -93,7 +98,6 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile Toggle */}
           <button
             className="md:hidden"
             onClick={() => setMobileOpen((prev) => !prev)}
@@ -132,7 +136,17 @@ const Header = () => {
                   )
                 )}
 
-                {/* Mobile auth buttons */}
+                {user && (
+                  <li>
+                    <NavLink
+                      href="/dashboard"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Dashboard
+                    </NavLink>
+                  </li>
+                )}
+
                 {user ? (
                   <li>
                     <Button

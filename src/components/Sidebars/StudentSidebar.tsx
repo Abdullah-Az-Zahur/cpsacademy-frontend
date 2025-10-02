@@ -10,6 +10,7 @@ function StudentSidebar() {
       </div>
 
       <nav className="flex flex-col gap-2">
+        <Link href="/">Home</Link>
         <Link href="#">Overview</Link>
         <Link href="#">Projects</Link>
         <Link href="#">Tools</Link>
