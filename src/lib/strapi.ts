@@ -1,27 +1,40 @@
+
+import axios from "axios";
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+
 export async function registerUser(
   email: string,
   password: string,
   username?: string
 ) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, username }),
+
+    try{
+      const resp = await axios.post(`${STRAPI_URL}/api/auth/local/register`,{
+        email,
+      password,
+      username,
+      })
     }
-  );
 
-  const data = await res.json();
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/auth/local/register`,
+  //   {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ email, password, username }),
+  //   }
+  // );
 
-  if (!res.ok) {
-    const message =
-      data?.error?.message || data?.message || JSON.stringify(data);
-    throw new Error(
-      typeof message === "string" ? message : JSON.stringify(message)
-    );
-  }
-  return data;
+  // const data = await res.json();
+
+  // if (!res.ok) {
+  //   const message =
+  //     data?.error?.message || data?.message || JSON.stringify(data);
+  //   throw new Error(
+  //     typeof message === "string" ? message : JSON.stringify(message)
+  //   );
+  // }
+  // return data;
 }
 
 export async function strapiLogin(identifier: string, password: string) {

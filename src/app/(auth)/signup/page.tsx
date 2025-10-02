@@ -1,4 +1,5 @@
 import React from "react";
+import SignupForm from "../_forms/SignupForm";
 
 function SignUp() {
   return (
@@ -9,7 +10,7 @@ function SignUp() {
         </div>
 
         <div className="sm:p-6 p-4 w-full flex justify-center">
-          {/* sign up */}
+          <SignupForm/>
         </div>
       </div>
     </section>
