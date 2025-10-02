@@ -1,8 +1,13 @@
+import Banner from '@/components/Home/Banner/Banner'
 import React from 'react'
 
 function HomePage() {
   return (
-    <div>HomePage</div>
+    <div>
+      <div className="container mx-auto">
+        <Banner />
+      </div>
+    </div>
   )
 }
 
