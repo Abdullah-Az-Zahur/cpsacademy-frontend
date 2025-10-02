@@ -1,7 +1,32 @@
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      role?: string | null;
+      jwt?: string;
+    } & DefaultSession["user"];
+  }
+
+  interface User {
+    id?: string;
+    role?: string | null;
+    jwt?: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string;
+    role?: string | null;
+    jwt?: string;
+    email?: string | null;
+  }
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Strapi",
@@ -25,17 +50,25 @@ const handler = NextAuth({
         );
 
         const data = await res.json();
+
         if (!res.ok) {
-          // authorization failed
           return null;
         }
 
-        return {
-          id: data.user?.id,
-          email: data.user?.email,
+        const user = {
+          id: data.user?.id ? String(data.user.id) : "",
+          email: data.user?.email ?? null,
           name: data.user?.username || data.user?.email,
           jwt: data.jwt,
-          role: data.user?.role?.name,
+          role: data.user?.role?.name ?? null,
+        } as const;
+
+        return {
+          id: user.id,
+          email: user.email ?? undefined,
+          name: user.name,
+          jwt: user.jwt,
+          role: user.role,
         };
       },
     }),
@@ -44,27 +77,31 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.jwt = (user as any).jwt;
-        token.role = (user as any).role;
-        token.id = (user as any).id;
+        if (typeof user.id !== "undefined") token.id = String(user.id);
+        if (typeof user.jwt !== "undefined") token.jwt = user.jwt;
+        if (typeof user.role !== "undefined") token.role = user.role ?? null;
+        if (typeof user.email !== "undefined") token.email = user.email ?? null;
       }
       return token;
     },
 
     async session({ session, token }) {
-      (session as any).user = {
-        id: token.id,
-        email: token.email,
-        role: token.role,
-        jwt: token.jwt,
-        name: session.user?.name,
+      session.user = {
+        ...session.user,
+        id: token.id ?? session.user?.id ?? "",
+        role: token.role ?? session.user?.role ?? null,
+        jwt: token.jwt ?? session.user?.jwt,
+        email: token.email ?? session.user?.email ?? null,
       };
+
       return session;
     },
   },
 
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

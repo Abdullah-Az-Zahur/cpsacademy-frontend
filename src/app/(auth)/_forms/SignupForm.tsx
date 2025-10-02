@@ -69,14 +69,14 @@ function SignupForm() {
         setError(
           "Registered but automatic login failed. Please login manually."
         );
-        // router.push("/login");
+        router.push("/");
       }
     } catch (err: unknown) {
-  if (err instanceof Error) {
-    setError(err.message);
-  } else {
-    setError("Login failed");
-  }
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Login failed");
+      }
     } finally {
       setLoading(false);
     }

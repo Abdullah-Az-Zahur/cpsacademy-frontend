@@ -1,31 +1,45 @@
 // src/lib/strapi.ts
 import axios from "axios";
+
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
-function parseStrapiError(data: any) {
+type NestedObject = Record<string, unknown>;
+
+function parseStrapiError(data: unknown) {
   try {
     if (!data) return null;
 
+    const d = data as NestedObject;
+
     // 1) direct error.message string
-    if (typeof data?.error?.message === "string") return data.error.message;
+    if (
+      typeof (d["error"] as NestedObject | undefined)?.["message"] === "string"
+    ) {
+      return (d["error"] as NestedObject).message as string;
+    }
 
     // 2) nested messages array (common)
-    const maybeArray = data?.message || data?.error?.message;
+    const maybeArray =
+      d["message"] ?? (d["error"] as NestedObject | undefined)?.["message"];
     if (Array.isArray(maybeArray) && maybeArray.length > 0) {
-      // e.g. [{ messages: [{ message: "Email already taken" }] }]
-      const first = maybeArray[0];
-      const inner = first?.messages?.[0]?.message;
+      const first = maybeArray[0] as NestedObject;
+      const inner = (first["messages"] as NestedObject[] | undefined)?.[0]?.[
+        "message"
+      ] as string | undefined;
       if (inner) return inner;
-      if (first?.message) return first.message;
+      if (first["message"] && typeof first["message"] === "string")
+        return first["message"];
     }
 
     // 3) details or validation object
-    if (data?.error?.details) return JSON.stringify(data.error.details);
+    if ((d["error"] as NestedObject | undefined)?.["details"]) {
+      return JSON.stringify((d["error"] as NestedObject).details);
+    }
 
     // 4) fallback to whole object
-    return JSON.stringify(data);
-  } catch (e) {
+    return JSON.stringify(d);
+  } catch {
     return JSON.stringify(data);
   }
 }
@@ -43,23 +57,25 @@ export async function registerUser(
       { timeout: 10000 }
     );
     return resp.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("registerUser error full:", err);
-    const responseData = err?.response?.data;
-    console.error("Strapi response data:", responseData);
 
-    // map to human message
-    const serverMsg =
-      parseStrapiError(responseData) || err.message || "Registration failed";
+    let responseData: unknown;
+    let serverMsg = "Registration failed";
 
-    // Helpful hint for typical connection issues
-    if (err.code === "ECONNREFUSED" || err.message?.includes("connect")) {
-      throw new Error(
-        `Cannot connect to Strapi at ${STRAPI_URL}. Is Strapi running?`
-      );
+    // Check if error is an AxiosError
+    if (axios.isAxiosError(err)) {
+      responseData = err.response?.data;
+      serverMsg = parseStrapiError(responseData) || err.message;
+      if (err.code === "ECONNREFUSED" || err.message.includes("connect")) {
+        throw new Error(
+          `Cannot connect to Strapi at ${STRAPI_URL}. Is Strapi running?`
+        );
+      }
+    } else if (err instanceof Error) {
+      serverMsg = err.message;
     }
 
-    // Throw with readable message to UI
     throw new Error(serverMsg);
   }
 }
@@ -72,23 +88,24 @@ export async function loginUser(email: string, password: string) {
       { timeout: 10000 }
     );
     return resp.data;
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("loginUser error full:", err);
-    const responseData = err?.response?.data;
-    console.error("Strapi response data:", responseData);
 
-    // map to human message
-    const serverMsg =
-      parseStrapiError(responseData) || err.message || "Login failed";
+    let responseData: unknown;
+    let serverMsg = "Login failed";
 
-    // Helpful hint for typical connection issues
-    if (err.code === "ECONNREFUSED" || err.message?.includes("connect")) {
-      throw new Error(
-        `Cannot connect to Strapi at ${STRAPI_URL}. Is Strapi running?`
-      );
+    if (axios.isAxiosError(err)) {
+      responseData = err.response?.data;
+      serverMsg = parseStrapiError(responseData) || err.message;
+      if (err.code === "ECONNREFUSED" || err.message.includes("connect")) {
+        throw new Error(
+          `Cannot connect to Strapi at ${STRAPI_URL}. Is Strapi running?`
+        );
+      }
+    } else if (err instanceof Error) {
+      serverMsg = err.message;
     }
 
-    // Throw with readable message to UI
     throw new Error(serverMsg);
   }
 }

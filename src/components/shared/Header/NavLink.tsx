@@ -7,7 +7,6 @@ import React from "react";
 const NavLink = ({
   href,
   children,
-  onClick,
 }: {
   href: string;
   children: React.ReactNode;
