@@ -15,10 +15,15 @@ import {
 } from "@/components/ui/navigation-menu";
 import { NavItem } from "@/types/nav";
 import NavLink from "./NavLink";
+import { useAuth } from "@/components/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/lib/auth";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useAuth();
 
+  // Common nav items (always shown)
   const navItems: NavItem[] = [
     { label: "Home", href: "/" },
     {
@@ -31,8 +36,6 @@ const Header = () => {
     },
     { label: "About", href: "#" },
     { label: "Contact", href: "#" },
-    { label: "Login", href: "/login" },
-    { label: "Sign Up", href: "/signup" },
   ];
 
   return (
@@ -45,7 +48,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
             <NavigationMenu>
               <NavigationMenuList>
                 {navItems.map((item) => (
@@ -78,6 +81,17 @@ const Header = () => {
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
+
+            {/* Auth buttons */}
+            {user ? (
+              <Button variant="destructive" size="sm" onClick={logout}>
+                Logout
+              </Button>
+            ) : (
+              <>
+                <Link href="/login">Login</Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -117,6 +131,33 @@ const Header = () => {
                       </NavLink>
                     </li>
                   )
+                )}
+
+                {/* Mobile auth buttons */}
+                {user ? (
+                  <li>
+                    <Button
+                      variant="destructive"
+                      className="w-full"
+                      onClick={() => {
+                        logout();
+                        setMobileOpen(false);
+                      }}
+                    >
+                      Logout
+                    </Button>
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <NavLink
+                        href="/login"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        Login
+                      </NavLink>
+                    </li>
+                  </>
                 )}
               </ul>
             </motion.div>

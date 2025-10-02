@@ -4,7 +4,7 @@ import { logout } from "@/lib/auth";
 
 export default function LogoutButton() {
   return (
-    <Button variant="destructive" onClick={logout} className="w-full">
+    <Button variant="destructive" onClick={logout}>
       Logout
     </Button>
   );
