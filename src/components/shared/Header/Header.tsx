@@ -15,9 +15,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { NavItem } from "@/types/nav";
 import NavLink from "./NavLink";
-import { useAuth } from "@/components/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { logout } from "@/lib/auth";
+import { logout, useAuth } from "@/lib/auth";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
