@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
 import {
@@ -14,7 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { registerUser } from "@/lib/strapi";
+import { loginUser, registerUser } from "@/lib/strapi";
 
 const ROLE_OPTIONS = [
   { label: "Normal User", value: "normal_user" },
@@ -34,12 +34,23 @@ function SignupForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    const safeUsername = username.trim() || email.split("@")[0];
+
+    setLoading(true);
 
     try {
       // registerUser should send roleType in the payload
-      await registerUser(email, password, username || undefined, roleType);
+      await registerUser(email, password, safeUsername, roleType);
 
       const result = await signIn("credentials", {
         redirect: false,
@@ -47,13 +58,18 @@ function SignupForm() {
         password,
       });
 
+      // reg may already include jwt/user but we call login to be consistent
+      const { user, jwt } = await loginUser(email, password);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("jwt", jwt);
+
       if (result?.ok) {
         router.push("/");
       } else {
         setError(
           "Registered but automatic login failed. Please login manually."
         );
-        router.push("/login");
+        // router.push("/login");
       }
     } catch (err: any) {
       setError(err?.message || "Registration failed");
@@ -140,7 +156,7 @@ function SignupForm() {
 
           <CardFooter className="flex flex-col gap-3 mt-5">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "Signing in..." : "Sign up"}
             </Button>
           </CardFooter>
         </form>

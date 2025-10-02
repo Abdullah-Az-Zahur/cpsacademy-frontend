@@ -13,21 +13,45 @@ import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { loginUser } from "@/lib/strapi";
 
 function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError(null);
 
-    setError("");
+    if (!email || !password) {
+      setError("Email and password are required.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+
     setLoading(true);
 
-    console.log(email, password);
+    try {
+      // Call your custom login endpoint (via loginUser helper in src/lib/strapi.ts)
+      const { user, jwt } = await loginUser(email, password);
+
+      // Save user + jwt to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("jwt", jwt);
+
+      // Redirect
+      router.push("/");
+    } catch (err: any) {
+      setError(err?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
