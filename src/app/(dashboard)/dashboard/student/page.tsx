@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function StudentDashboard() {
+function studentDashboard() {
   return (
-    <div>StudentDashboard</div>
-  )
+    <div>
+      <h1 className="text-2xl font-bold">Social Media Manager Dashboard</h1>
+      <p>Welcome — show student widgets here.</p>
+    </div>
+  );
 }
 
-export default StudentDashboard
+export default studentDashboard;
