@@ -10,9 +10,9 @@ function DeveloperSidebar() {
       </div>
 
       <nav className="flex flex-col gap-2">
-        <Link href="/dashboard/developer">Overview</Link>
-        <Link href="/dashboard/developer">Projects</Link>
-        <Link href="/dashboard/developer">Tools</Link>
+        <Link href="#">Overview</Link>
+        <Link href="#">Projects</Link>
+        <Link href="#">Tools</Link>
       </nav>
 
       <div className="mt-auto pt-6">

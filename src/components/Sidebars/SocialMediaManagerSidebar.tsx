@@ -10,9 +10,9 @@ function SocialMediaManagerSidebar() {
       </div>
 
       <nav className="flex flex-col gap-2">
-        <Link href="/dashboard/socialMediaManager">Overview</Link>
-        <Link href="/dashboard/socialMediaManager">Projects</Link>
-        <Link href="/dashboard/socialMediaManager">Tools</Link>
+        <Link href="#">Overview</Link>
+        <Link href="#">Projects</Link>
+        <Link href="#">Tools</Link>
       </nav>
 
       <div className="mt-auto pt-6">
