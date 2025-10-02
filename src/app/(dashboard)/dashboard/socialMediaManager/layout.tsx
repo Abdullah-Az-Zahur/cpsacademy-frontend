@@ -1,6 +1,6 @@
 import React from "react";
 
-function socialMediaManagerLayout({ children }: { children: React.ReactNode }) {
+function SocialMediaManagerLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex">
       <div className="flex-1">
@@ -10,4 +10,4 @@ function socialMediaManagerLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default socialMediaManagerLayout;
+export default SocialMediaManagerLayout;

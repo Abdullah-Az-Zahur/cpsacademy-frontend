@@ -1,6 +1,6 @@
 import React from "react";
 
-function StudentLayout({ children }: { children: React.ReactNode }) {
+function NormalUserLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex">
       <div className="flex-1">
@@ -10,4 +10,4 @@ function StudentLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default StudentLayout;
+export default NormalUserLayout;
