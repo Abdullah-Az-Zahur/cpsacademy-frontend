@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -13,6 +14,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { registerUser } from "@/lib/strapi";
 
 const ROLE_OPTIONS = [
   { label: "Normal User", value: "normal_user" },
@@ -32,11 +34,34 @@ function SignupForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
-    setError("");
     setLoading(true);
+    setError(null);
 
-    console.log(email, password);
+    try {
+      // registerUser should send roleType in the payload
+      await registerUser(email, password, username || undefined, roleType);
+
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.ok) {
+        router.push("/");
+      } else {
+        setError(
+          "Registered but automatic login failed. Please login manually."
+        );
+        router.push("/login");
+      }
+    } catch (err: any) {
+      setError(err?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+
+    console.log(email, password, username, roleType);
   }
 
   return (
