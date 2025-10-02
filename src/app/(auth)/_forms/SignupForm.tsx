@@ -71,8 +71,12 @@ function SignupForm() {
         );
         // router.push("/login");
       }
-    } catch (err: any) {
-      setError(err?.message || "Registration failed");
+    } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("Login failed");
+  }
     } finally {
       setLoading(false);
     }
