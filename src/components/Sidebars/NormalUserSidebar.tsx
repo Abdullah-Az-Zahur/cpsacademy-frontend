@@ -2,17 +2,17 @@ import { logout } from "@/lib/auth";
 import Link from "next/link";
 import React from "react";
 
-function DeveloperSidebar() {
+function NormalUserSidebar() {
   return (
     <aside className="w-64 bg-gray-50 min-h-screen p-4 border-r">
       <div className="mb-6">
-        <h2 className="font-bold text-lg">Developer</h2>
+        <h2 className="font-bold text-lg">Normal User</h2>
       </div>
 
       <nav className="flex flex-col gap-2">
-        <Link href="/dashboard/developer">Overview</Link>
-        <Link href="/dashboard/developer">Projects</Link>
-        <Link href="/dashboard/developer">Tools</Link>
+        <Link href="/dashboard/normalUser">Overview</Link>
+        <Link href="/dashboard/normalUser">Projects</Link>
+        <Link href="/dashboard/normalUser">Tools</Link>
       </nav>
 
       <div className="mt-auto pt-6">
@@ -24,4 +24,4 @@ function DeveloperSidebar() {
   );
 }
 
-export default DeveloperSidebar;
+export default NormalUserSidebar;

@@ -4,8 +4,8 @@ import React from "react";
 import { useAuth } from "@/lib/auth";
 import DeveloperLayout from "./developer/layout";
 import StudentLayout from "./student/layout";
-import SocialMediaManagerLayout from "./socialMediaManager/layout"; // ensure this matches folder name
-import NormalUserLayout from "./normalUser/layout"; // ensure this matches folder name
+import SocialMediaManagerLayout from "./socialMediaManager/layout"; 
+import NormalUserLayout from "./normalUser/layout"; 
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   // CALL the hook!
