@@ -20,7 +20,6 @@ export default function DashboardLayout() {
   switch (user.role) {
     case "developer":
       return <DeveloperDashboard />;
-
     case "student":
       return <StudentDashboard />;
     case "social_media_manager":
