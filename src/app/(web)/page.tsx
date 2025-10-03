@@ -6,6 +6,7 @@ import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
 import HelpSection from "@/components/Home/HelpSection/HelpSection";
 import MobileApp from "@/components/Home/MobileApp/MobileApp";
+import PlansPricing from "@/components/Home/PlansPricing/PlansPricing";
 import SocialPosts from "@/components/Home/SocialPosts/SocialPosts";
 import Subscribe from "@/components/Home/Subscribe/Subscribe";
 import VideoTutorials from "@/components/Home/VideoTutorials/VideoTutorials";
@@ -61,8 +62,8 @@ function HomePage() {
         <Classes/>
       </div>
 
-      <div className="container mx-auto my-5 md:my-10">
-        <SocialPosts/>
+      <div className="my-5 md:my-10">
+        <PlansPricing/>
       </div>
 
     </div>
