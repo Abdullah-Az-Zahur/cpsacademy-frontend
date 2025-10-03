@@ -1,4 +1,5 @@
-// components/course/CategoryFilter.tsx
+"use client";
+
 import { Button } from "@/components/ui/button";
 
 interface CategoryFilterProps {
@@ -19,7 +20,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         onClick={() => onCategoryChange("all")}
         className="rounded-full"
       >
-        All Categories
+        All Modules
       </Button>
       {categories.map((category) => (
         <Button

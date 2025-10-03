@@ -1,11 +1,12 @@
 import Banner from "@/components/Home/Banner/Banner";
+import Classes from "@/components/Home/Classes/Classes";
 import Events from "@/components/Home/Events/Events";
 import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
 import HelpSection from "@/components/Home/HelpSection/HelpSection";
 import MobileApp from "@/components/Home/MobileApp/MobileApp";
+import SocialPosts from "@/components/Home/SocialPosts/SocialPosts";
 import Subscribe from "@/components/Home/Subscribe/Subscribe";
-import TrendingCourses from "@/components/Home/TrendingCourses/TrendingCourses";
 import VideoTutorials from "@/components/Home/VideoTutorials/VideoTutorials";
 import WhyChooseUs from "@/components/Home/WhyChooseUs/WhyChooseUs";
 import React from "react";
@@ -53,7 +54,11 @@ function HomePage() {
       </div>
 
       <div className="container mx-auto my-5 md:my-10">
-        <TrendingCourses />
+        <Classes/>
+      </div>
+
+      <div className="container mx-auto my-5 md:my-10">
+        <SocialPosts/>
       </div>
 
     </div>
