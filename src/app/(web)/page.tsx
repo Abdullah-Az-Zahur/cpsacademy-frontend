@@ -2,6 +2,7 @@ import Banner from "@/components/Home/Banner/Banner";
 import Events from "@/components/Home/Events/Events";
 import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
+import Subscribe from "@/components/Home/Subscribe/Subscribe";
 import WhyChooseUs from "@/components/Home/WhyChooseUs/WhyChooseUs";
 import React from "react";
 
