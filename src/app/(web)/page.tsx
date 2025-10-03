@@ -1,5 +1,6 @@
-import Banner from '@/components/Home/Banner/Banner'
-import React from 'react'
+import Banner from "@/components/Home/Banner/Banner";
+import WhyChooseUs from "@/components/Home/WhyChooseUs/WhyChooseUs";
+import React from "react";
 
 function HomePage() {
   return (
@@ -10,9 +11,14 @@ function HomePage() {
       <div>
         <hr className="my-5" />
       </div>
+
+      <div className="container mx-auto md:my-10">
+        <WhyChooseUs />
+      </div>
+
       
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;
