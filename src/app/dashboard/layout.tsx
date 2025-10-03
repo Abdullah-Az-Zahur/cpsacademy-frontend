@@ -1,31 +1,23 @@
 "use client";
 import React from "react";
 import { useAuth } from "@/lib/auth";
-import DeveloperDashboard from "@/components/Dashboard/DeveloperDashboard/DeveloperDashboard";
-import StudentDashboard from "@/components/Dashboard/StudentDashboard/StudentDashboard";
-import SocialMediaManagerDashboard from "@/components/Dashboard/SocialMediaManagerDashboard/SocialMediaManagerDashboard";
-import NormalUserDashboard from "@/components/Dashboard/NormalUserDashboard/NormalUserDashboard";
-
-// Role layouts with sidebar
-
-// Role content components
+import RoleDashboard from "@/components/Dashboard/RoleDashboard";
 
 export default function DashboardLayout() {
   const { user, loading } = useAuth();
 
   if (loading) return <div>Loading...</div>;
-  if (!user) return <div>Please login</div>;
+  if (!user || !user.role) return <div>Please login</div>;
 
-  // Render role-specific layout with role-specific content
-  switch (user.role) {
-    case "developer":
-      return <DeveloperDashboard />;
-    case "student":
-      return <StudentDashboard />;
-    case "social_media_manager":
-      return <SocialMediaManagerDashboard />;
-    case "normal_user":
-    default:
-      return <NormalUserDashboard />;
-  }
+  const normalizedUser = {
+    ...user,
+    id: String(user.id),
+    email: user.email ?? undefined,
+    username: user.username ?? undefined,
+    name: user.name ?? undefined,
+    role: user.role!,
+    jwt: user.jwt ?? undefined,
+  };
+
+  return <RoleDashboard role={normalizedUser.role} user={normalizedUser} />;
 }

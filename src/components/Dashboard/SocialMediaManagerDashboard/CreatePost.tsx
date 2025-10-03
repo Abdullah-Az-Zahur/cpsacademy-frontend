@@ -1,7 +1,10 @@
-"use client"
+"use client";
 import { useAuth } from "@/lib/auth";
 import { createPost, uploadImage } from "@/lib/strapi";
 import React, { useState } from "react";
+
+type TextNode = { type: "text"; text: string };
+type ParagraphBlock = { type: "paragraph"; children: TextNode[] };
 
 function CreatePost({
   openCreateInitially = false,
@@ -26,11 +29,20 @@ function CreatePost({
     setMessage(null);
 
     try {
-      let mediaId: number | undefined;
+      let mediaId: number | null = null;
 
       if (imageFile) {
-        const uploaded = await uploadImage(imageFile, jwt ?? undefined);
-        mediaId = uploaded?.id;
+        const uploaded: unknown = await uploadImage(
+          imageFile,
+          jwt ?? undefined
+        );
+        // safely narrow to an object that may have numeric id
+        if (
+          uploaded &&
+          typeof (uploaded as Record<string, unknown>).id === "number"
+        ) {
+          mediaId = (uploaded as Record<string, number>).id;
+        }
       }
 
       // build simple block structure (paragraphs)
@@ -47,9 +59,11 @@ function CreatePost({
       setImageFile(null);
       setOpen(false);
       console.log("Created post:", created);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      // narrow unknown to Error for a safe message
+      const msg = err instanceof Error ? err.message : String(err);
       console.error(err);
-      setMessage(err?.message ?? "Failed to create post");
+      setMessage(msg || "Failed to create post");
     } finally {
       setLoading(false);
     }
@@ -149,7 +163,7 @@ function CreatePost({
 export default CreatePost;
 
 /** small helper to build paragraph blocks from textarea text */
-function buildContentFromText(text: string) {
+function buildContentFromText(text: string): ParagraphBlock[] {
   const paragraphs = text
     .split(/\n{2,}/)
     .map((p) => p.trim())

@@ -39,10 +39,22 @@ function LoginForm() {
 
     try {
       // Call your custom login endpoint (via loginUser helper in src/lib/strapi.ts)
-      const { user, jwt } = await loginUser(email, password);
+      const resp = await loginUser(email, password);
+
+      // Narrow the loosely-typed response safely
+      const user = (resp as Record<string, unknown>)["user"] ?? null;
+      const jwt = String((resp as Record<string, unknown>)["jwt"] ?? "");
+
+      if (!jwt) {
+        throw new Error("Login response did not include a valid token.");
+      }
 
       // Save user + jwt to localStorage
-      localStorage.setItem("user", JSON.stringify(user));
+      try {
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch {
+        // ignore storage stringify error — unlikely, but do not block login
+      }
       localStorage.setItem("jwt", jwt);
 
       // Redirect

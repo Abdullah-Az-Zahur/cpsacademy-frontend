@@ -1,4 +1,4 @@
-import NormalUserSidebar from "@/components/Sidebars/NormalUserSidebar";
+
 import { useAuth } from "@/lib/auth";
 import React from "react";
 
@@ -9,10 +9,7 @@ function NormalUserDashboard() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r shadow-sm">
-        <NormalUserSidebar />
-      </aside>
+      
 
       {/* Main Content */}
       <main className="flex-1 p-6">

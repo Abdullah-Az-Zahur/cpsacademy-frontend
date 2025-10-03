@@ -6,7 +6,17 @@ const STRAPI_URL =
 
 type NestedObject = Record<string, unknown>;
 
-function parseStrapiError(data: unknown) {
+/** Small, flexible content block shape — extend if your CMS uses richer blocks */
+export type TextNode = { type: "text"; text: string };
+export type ContentBlock = { type: string; children: TextNode[] };
+
+/** Upload result from Strapi (shape may vary; this covers common fields) */
+export type UploadResult = Record<string, unknown> & {
+  id?: number;
+  url?: string;
+};
+
+function parseStrapiError(data: unknown): string | null {
   try {
     if (!data) return null;
 
@@ -40,19 +50,20 @@ function parseStrapiError(data: unknown) {
   }
 }
 
+/** Register user */
 export async function registerUser(
   email: string,
   password: string,
   username?: string,
   roleType?: string
-) {
+): Promise<Record<string, unknown>> {
   try {
     const resp = await axios.post(
       `${STRAPI_URL}/api/custom-register`,
       { email, password, username, ...(roleType ? { roleType } : {}) },
       { timeout: 10000 }
     );
-    return resp.data;
+    return resp.data as Record<string, unknown>;
   } catch (err: unknown) {
     console.error("registerUser error full:", err);
 
@@ -75,14 +86,18 @@ export async function registerUser(
   }
 }
 
-export async function loginUser(email: string, password: string) {
+/** Login user */
+export async function loginUser(
+  email: string,
+  password: string
+): Promise<Record<string, unknown>> {
   try {
     const resp = await axios.post(
       `${STRAPI_URL}/api/custom-login`,
       { email, password },
       { timeout: 10000 }
     );
-    return resp.data;
+    return resp.data as Record<string, unknown>;
   } catch (err: unknown) {
     console.error("loginUser error full:", err);
 
@@ -105,7 +120,11 @@ export async function loginUser(email: string, password: string) {
   }
 }
 
-export async function uploadImage(file: File, jwt?: string) {
+/** Upload an image file to Strapi */
+export async function uploadImage(
+  file: File,
+  jwt?: string
+): Promise<UploadResult> {
   const form = new FormData();
   form.append("file", file);
 
@@ -117,13 +136,17 @@ export async function uploadImage(file: File, jwt?: string) {
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
-    throw new Error(`mage upload failed: ${res.status} ${text}`);
+    throw new Error(`Image upload failed: ${res.status} ${text}`);
   }
 
-  const json = await res.json();
-  return Array.isArray(json) ? json[0] : json;
+  const json = await res.json().catch(() => null);
+  if (Array.isArray(json)) {
+    return (json[0] ?? {}) as UploadResult;
+  }
+  return (json ?? {}) as UploadResult;
 }
 
+/** Create a post in Strapi */
 export async function createPost(
   {
     title,
@@ -131,12 +154,13 @@ export async function createPost(
     mediaId,
   }: {
     title: string;
-    contentBlocks: any[];
+    contentBlocks: ContentBlock[];
     mediaId: number | null;
   },
   jwt?: string
-) {
-  const body: any = { data: { title, content: contentBlocks } };
+): Promise<Record<string, unknown>> {
+  type Body = { data: Record<string, unknown> };
+  const body: Body = { data: { title, content: contentBlocks } };
 
   if (mediaId) {
     body.data.media = mediaId;
@@ -153,8 +177,10 @@ export async function createPost(
 
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    throw new Error(`Create post failed: ${res.status} ${JSON.stringify(err)}`);
+    throw new Error(
+      `Create post failed: ${res.status} ${JSON.stringify(err ?? null)}`
+    );
   }
 
-  return await res.json();
+  return (await res.json()) as Record<string, unknown>;
 }

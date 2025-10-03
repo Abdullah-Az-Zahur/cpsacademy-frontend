@@ -58,9 +58,19 @@ function SignupForm() {
         password,
       });
 
-      // reg may already include jwt/user but we call login to be consistent
-      const { user, jwt } = await loginUser(email, password);
-      localStorage.setItem("user", JSON.stringify(user));
+      const resp = await loginUser(email, password);
+      const user = (resp as Record<string, unknown>)["user"] ?? null;
+      const jwt = String((resp as Record<string, unknown>)["jwt"] ?? "");
+
+      if (!jwt) {
+        throw new Error("Login response did not include a valid token.");
+      }
+
+      try {
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch {
+        // ignore stringify/storage errors — don't block the flow
+      }
       localStorage.setItem("jwt", jwt);
 
       if (result?.ok) {
