@@ -66,6 +66,10 @@ function HomePage() {
         <PlansPricing/>
       </div>
 
+      <div className="container mx-auto my-5 md:my-10">
+        <SocialPosts/>
+      </div>
+
     </div>
   );
 }
