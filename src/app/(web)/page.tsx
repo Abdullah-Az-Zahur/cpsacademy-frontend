@@ -2,6 +2,7 @@ import Banner from "@/components/Home/Banner/Banner";
 import Events from "@/components/Home/Events/Events";
 import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
+import HelpSection from "@/components/Home/HelpSection/HelpSection";
 import Subscribe from "@/components/Home/Subscribe/Subscribe";
 import WhyChooseUs from "@/components/Home/WhyChooseUs/WhyChooseUs";
 import React from "react";
@@ -34,6 +35,10 @@ function HomePage() {
 
       <div className="container mx-auto my-5 md:my-10">
         <Subscribe />
+      </div>
+
+      <div className="container mx-auto my-5 md:my-10">
+        <HelpSection />
       </div>
 
     </div>
