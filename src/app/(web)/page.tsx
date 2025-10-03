@@ -1,4 +1,5 @@
 import Banner from "@/components/Home/Banner/Banner";
+import Explore from "@/components/Home/Explore/Explore";
 import WhyChooseUs from "@/components/Home/WhyChooseUs/WhyChooseUs";
 import React from "react";
 
@@ -16,7 +17,11 @@ function HomePage() {
         <WhyChooseUs />
       </div>
 
-      
+      <div className="bg-primary">
+        <Explore />
+      </div>
+
+
     </div>
   );
 }
