@@ -46,7 +46,7 @@ function LoginForm() {
       localStorage.setItem("jwt", jwt);
 
       // Redirect
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

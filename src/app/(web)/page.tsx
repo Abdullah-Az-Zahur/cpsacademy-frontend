@@ -7,6 +7,10 @@ function HomePage() {
       <div className="container mx-auto">
         <Banner />
       </div>
+      <div>
+        <hr className="my-5" />
+      </div>
+      
     </div>
   )
 }
