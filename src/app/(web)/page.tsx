@@ -1,5 +1,6 @@
 import Banner from "@/components/Home/Banner/Banner";
 import Classes from "@/components/Home/Classes/Classes";
+import CourseList from "@/components/Home/CourseList/CourseList";
 import Events from "@/components/Home/Events/Events";
 import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
@@ -53,6 +54,9 @@ function HomePage() {
         <MobileApp />
       </div>
 
+      <div className="container mx-auto my-5 md:my-10">
+        <CourseList/>
+      </div>
       <div className="container mx-auto my-5 md:my-10">
         <Classes/>
       </div>
