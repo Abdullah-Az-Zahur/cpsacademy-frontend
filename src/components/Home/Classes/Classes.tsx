@@ -2,13 +2,16 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { ClassItem } from "@/types/classes";
-import CategoryFilter from "./CategoryFilter/CategoryFilter";
+import CategoryFilter from "../../common/CategoryFilter/CategoryFilter";
 import ClassCard from "./ClassCard/ClassCard";
+import { useAuth } from "@/lib/auth";
+import Link from "next/link";
 
 const Classes: React.FC = () => {
   const [classes, setClasses] = useState<ClassItem[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedModule, setSelectedModule] = useState("all");
+
+  const { user, loading, setLoading } = useAuth();
 
   // Fetch classes from Strapi
   useEffect(() => {
@@ -26,7 +29,7 @@ const Classes: React.FC = () => {
       }
     };
     fetchClasses();
-  }, []);
+  }, [setLoading]);
 
   // Extract unique modules for filter
   const allModules = useMemo(() => {
@@ -41,7 +44,26 @@ const Classes: React.FC = () => {
     return classes.filter((cls) => cls.module.title === selectedModule);
   }, [classes, selectedModule]);
 
-  if (loading) return <div className="text-center py-12">Loading classes...</div>;
+  if (loading) {
+    return <div className="text-center py-12">Loading classes...</div>;
+  }
+
+  // ✅ Conditional rendering for user/role check
+  if (!user || user.role !== "student") {
+    return (
+      <div className="text-center py-12">
+        <p className="text-lg font-medium mb-4">
+          Please login as a <span className="font-bold">student</span> to view classes.
+        </p>
+        <Link
+          href="/login"
+          className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition"
+        >
+          Login
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <section className="px-4 py-12 container mx-auto">

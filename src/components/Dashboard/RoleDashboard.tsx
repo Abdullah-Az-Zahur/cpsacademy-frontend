@@ -3,29 +3,7 @@ import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import GenericSidebar, { MenuItem } from "../Sidebars/Dashboard/GenericSidebar";
 import { logout } from "@/lib/auth";
-
-/**
- * Example role type — adapt to your auth/user types
- */
-export type Role =
-  | "developer"
-  | "student"
-  | "social_media_manager"
-  | "normal_user";
-
-export interface User {
-  id?: string;
-  name?: string;
-  email?: string;
-  role?: Role;
-  avatarUrl?: string;
-  // add any other fields your app uses
-}
-
-type Props = {
-  role: Role;
-  user?: User | null;
-};
+import { Props, Role } from "@/types/user";
 
 // lazy imports for heavy components
 const CreatePost = dynamic(

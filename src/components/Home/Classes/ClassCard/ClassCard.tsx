@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Play } from "lucide-react";
-import { getYoutubeThumbnail } from "./getYoutubeThumbnail";
+import { getYoutubeThumbnail } from "../../../../utils/getYoutubeThumbnail";
 
 interface ClassCardProps {
   cls: ClassItem;

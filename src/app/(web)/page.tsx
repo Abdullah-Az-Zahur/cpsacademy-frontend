@@ -6,6 +6,7 @@ import Explore from "@/components/Home/Explore/Explore";
 import GetSkills from "@/components/Home/GetSkills/GetSkills";
 import HelpSection from "@/components/Home/HelpSection/HelpSection";
 import MobileApp from "@/components/Home/MobileApp/MobileApp";
+import ModuleList from "@/components/Home/ModuleList/ModuleList";
 import PlansPricing from "@/components/Home/PlansPricing/PlansPricing";
 import SocialPosts from "@/components/Home/SocialPosts/SocialPosts";
 import Subscribe from "@/components/Home/Subscribe/Subscribe";
@@ -56,20 +57,24 @@ function HomePage() {
       </div>
 
       <div className="container mx-auto my-5 md:my-10">
-        <CourseList/>
+        <CourseList />
       </div>
+
       <div className="container mx-auto my-5 md:my-10">
-        <Classes/>
+        <ModuleList />
+      </div>
+
+      <div className="container mx-auto my-5 md:my-10">
+        <Classes />
       </div>
 
       <div className="my-5 md:my-10">
-        <PlansPricing/>
+        <PlansPricing />
       </div>
 
       <div className="container mx-auto my-5 md:my-10">
-        <SocialPosts/>
+        <SocialPosts />
       </div>
-
     </div>
   );
 }
