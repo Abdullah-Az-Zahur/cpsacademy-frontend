@@ -43,7 +43,7 @@ const Header = () => {
         <div className="mx-auto flex container items-center justify-between px-4 py-3 md:py-4">
           {/* Logo */}
           <Link href="/" className="text-xl font-bold">
-            🚀 Logo
+            🚀 LMS Academy
           </Link>
 
           {/* Desktop Nav */}
