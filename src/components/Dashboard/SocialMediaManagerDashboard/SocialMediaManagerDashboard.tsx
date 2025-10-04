@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 function SocialMediaManagerDashboard() {
   const { user, loading } = useAuth();
-  const [activeComponent, setActiveComponent] = useState("home");
+  const [activeComponent] = useState("home");
 
   // Map component keys to actual components
   const componentMap: Record<string, React.ReactNode> = {

@@ -9,6 +9,18 @@ export interface Module {
   publishedAt: string;
 }
 
+export interface ResourceFile {
+  id: number;
+  documentId: string;
+  name: string;
+  url: string;
+  mime: string;
+  size: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 export interface ClassItem {
   id: number;
   documentId: string;
@@ -19,7 +31,7 @@ export interface ClassItem {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  resources: any;
+  resources: ResourceFile | null;
   module: Module;
 }
 

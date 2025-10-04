@@ -15,6 +15,11 @@ const ModuleList: React.FC = () => {
   const [selectedCourse, setSelectedCourse] = useState<string>("all");
   const { user, loading, setLoading } = useAuth();
 
+  type StrapiCollection<T> = {
+    data: T[];
+    meta?: unknown;
+  };
+
   useEffect(() => {
     const ac = new AbortController();
     async function fetchModules() {
@@ -23,18 +28,32 @@ const ModuleList: React.FC = () => {
           `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/modules?populate=classes`,
           { signal: ac.signal }
         );
-        const json = await res.json();
+
+        const json = (await res.json()) as StrapiCollection<ModuleItem>;
         const items: ModuleItem[] = Array.isArray(json.data) ? json.data : [];
-        // ensure latest first (defensive)
-        items.sort((a, b) => (new Date(b.createdAt || "").getTime() - new Date(a.createdAt || "").getTime()));
+
+        items.sort(
+          (a, b) =>
+            new Date(b.createdAt || "").getTime() -
+            new Date(a.createdAt || "").getTime()
+        );
         setModules(items);
-      } catch (err) {
-        if ((err as any)?.name === "AbortError") return;
-        console.error("Failed to fetch modules:", err);
+      } catch (err: unknown) {
+        // narrow the unknown — DOMException is thrown by AbortController in the browser
+        if (err instanceof DOMException && err.name === "AbortError") return;
+
+        // If you want safe access to Error properties, check `err instanceof Error`
+        if (err instanceof Error) {
+          console.error("Failed to fetch modules:", err.message);
+        } else {
+          // fallback for anything else
+          console.error("Failed to fetch modules:", err);
+        }
       } finally {
         if (typeof setLoading === "function") setLoading(false);
       }
     }
+
     fetchModules();
     return () => ac.abort();
   }, [setLoading]);
@@ -55,15 +74,17 @@ const ModuleList: React.FC = () => {
   }, [modules, selectedCourse]);
 
   // developer-only check
-  const isDeveloper = !!user && (user.role === "developer" );
+  const isDeveloper = !!user && user.role === "developer";
 
-  if (loading) return <div className="text-center py-12">Loading modules...</div>;
+  if (loading)
+    return <div className="text-center py-12">Loading modules...</div>;
 
   if (!user || !isDeveloper) {
     return (
       <div className="text-center py-12">
         <p className="text-lg font-medium mb-4">
-          Please login as a <span className="font-bold">developer</span> to view modules.
+          Please login as a <span className="font-bold">developer</span> to view
+          modules.
         </p>
         <Link
           href="/login"
@@ -77,7 +98,9 @@ const ModuleList: React.FC = () => {
 
   return (
     <section className="px-4 py-12 container mx-auto">
-      <h3 className="text-2xl md:text-4xl font-bold text-center mb-2">All Modules</h3>
+      <h3 className="text-2xl md:text-4xl font-bold text-center mb-2">
+        All Modules
+      </h3>
       <p className="text-muted-foreground text-center mb-8">
         Manage modules and inspect classes inside each module
       </p>
@@ -89,7 +112,9 @@ const ModuleList: React.FC = () => {
       />
 
       {filteredModules.length === 0 ? (
-        <div className="text-center py-12 text-muted-foreground">No modules found for this course.</div>
+        <div className="text-center py-12 text-muted-foreground">
+          No modules found for this course.
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
           {filteredModules.map((mod) => (
