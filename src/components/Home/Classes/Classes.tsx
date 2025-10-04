@@ -49,7 +49,7 @@ const Classes: React.FC = () => {
     return <div className="text-center py-12">Loading classes...</div>;
   }
 
-  if (!user || user.role !== "student") {
+  if (!user || (user.role !== "student" && user.role !== "developer")) {
     return (
       <div className="text-center py-12">
         <p className="text-lg font-medium mb-4">
