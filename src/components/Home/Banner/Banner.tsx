@@ -90,6 +90,7 @@ const Banner: React.FC = () => {
             <button className="mt-5 md:mt-8 lg:mt-12 xl:mt-20">
               <Link
                 href="#"
+                onClick={(e) => e.preventDefault()}
                 className="flex gap-2 items-center text-base sm:text-lg md:text-xl"
               >
                 Connect our expert

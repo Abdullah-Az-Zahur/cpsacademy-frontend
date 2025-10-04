@@ -27,13 +27,10 @@ const Events = () => {
             <span className="text-primary">mindset</span>
           </p>
           <button className="mt-4">
-            <Link
-              href="#"
-              className="flex gap-2 items-center text-sm sm:text-base hover:gap-3 transition-all duration-300"
-            >
+            <button className="flex gap-2 items-center text-sm sm:text-base hover:gap-3 transition-all duration-300">
               View all events{" "}
               <ArrowRight className="bg-primary text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 p-1" />{" "}
-            </Link>
+            </button>
           </button>
         </div>
 

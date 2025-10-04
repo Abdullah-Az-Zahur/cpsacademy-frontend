@@ -26,12 +26,12 @@ const WhyChooseUs = () => {
           </p>
 
           <div className="mt-6 md:mt-8 lg:mt-10">
-            <Link
-              href="#"
+            <button
+              
               className="underline text-primary font-bold text-lg hover:text-primary-dark transition-colors"
             >
               Learn more about us
-            </Link>
+            </button>
           </div>
         </div>
       </section>

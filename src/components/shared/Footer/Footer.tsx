@@ -40,33 +40,47 @@ const Footer = () => {
           {/* Column 2 - Useful Links */}
           <div>
             <h4 className="font-semibold mb-4">Useful Links</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>About Us</li>
-              <li>Careers</li>
-              <li>Blog</li>
-              <li>FAQs</li>
-            </ul>
+            <div className="flex flex-col space-y-2">
+              {["About Us", "Careers", "Blog", "FAQs"].map((item, idx) => (
+                <button
+                  key={idx}
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Column 3 - Company Pages */}
           <div>
             <h4 className="font-semibold mb-4">Pages</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>Home</li>
-              <li>Services</li>
-              <li>Portfolio</li>
-              <li>Contact</li>
-            </ul>
+            <div className="flex flex-col space-y-2">
+              {["Home", "Services", "Portfolio", "Contact"].map((item, idx) => (
+                <button
+                  key={idx}
+                  className="text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Column 4 - Contact */}
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>Email: info@example.com</li>
-              <li>Phone: +123 456 789</li>
-              <li>Location: New York, USA</li>
-            </ul>
+            <div className="flex flex-col space-y-2">
+              <button className="text-gray-400 hover:text-white text-left transition">
+                Email: info@example.com
+              </button>
+              <button className="text-gray-400 hover:text-white text-left transition">
+                Phone: +123 456 789
+              </button>
+              <button className="text-gray-400 hover:text-white text-left transition">
+                Location: New York, USA
+              </button>
+            </div>
           </div>
         </div>
 

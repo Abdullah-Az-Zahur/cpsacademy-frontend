@@ -323,7 +323,7 @@ const GetSkills = () => {
             className="flex-1"
           >
             <Link
-              href="#"
+              href="/login"
               className="bg-black text-white px-4 py-3 sm:px-5 sm:py-3 rounded-full inline-block w-full text-center text-sm sm:text-base"
             >
               Get started today
