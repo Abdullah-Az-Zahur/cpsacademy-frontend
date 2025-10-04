@@ -49,6 +49,8 @@ const ModuleList: React.FC = () => {
           // fallback for anything else
           console.error("Failed to fetch modules:", err);
         }
+        // Set empty array on error
+        setModules([]);
       } finally {
         if (typeof setLoading === "function") setLoading(false);
       }
@@ -93,6 +95,38 @@ const ModuleList: React.FC = () => {
           Login
         </Link>
       </div>
+    );
+  }
+
+  // Show coming soon if no modules available
+  if (modules.length === 0) {
+    return (
+      <section className="px-4 py-12 container mx-auto">
+        <div className="text-center py-20">
+          <div className="mb-6">
+            <svg
+              className="w-24 h-24 mx-auto text-muted-foreground/40"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+          </div>
+          <h3 className="text-3xl font-bold mb-3">Coming Soon!</h3>
+          <p className="text-muted-foreground text-lg mb-2">
+            We&apos;re preparing exciting modules for you.
+          </p>
+          <p className="text-muted-foreground">
+            Check back soon to start building amazing projects!
+          </p>
+        </div>
+      </section>
     );
   }
 
