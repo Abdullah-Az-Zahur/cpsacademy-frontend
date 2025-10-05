@@ -69,7 +69,7 @@ function SignupForm() {
       try {
         localStorage.setItem("user", JSON.stringify(user));
       } catch {
-        // ignore stringify/storage errors — don't block the flow
+        
       }
       localStorage.setItem("jwt", jwt);
 
