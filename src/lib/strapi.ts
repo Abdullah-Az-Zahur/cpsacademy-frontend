@@ -1,19 +1,10 @@
+import { ContentBlock, UploadResult } from "@/types/strapi";
 import axios from "axios";
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
 
 type NestedObject = Record<string, unknown>;
-
-/** Small, flexible content block shape — extend if your CMS uses richer blocks */
-export type TextNode = { type: "text"; text: string };
-export type ContentBlock = { type: string; children: TextNode[] };
-
-/** Upload result from Strapi (shape may vary; this covers common fields) */
-export type UploadResult = Record<string, unknown> & {
-  id?: number;
-  url?: string;
-};
 
 function parseStrapiError(data: unknown): string | null {
   try {

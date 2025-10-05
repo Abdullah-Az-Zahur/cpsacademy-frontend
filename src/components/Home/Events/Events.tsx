@@ -1,6 +1,5 @@
 "use client";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import EventCard from "./Card/EventCard";
 import { Swiper, SwiperSlide } from "swiper/react";
