@@ -1,10 +1,8 @@
-import { ContentBlock, UploadResult } from "@/types/strapi";
+import { Body, ContentBlock, NestedObject, UploadResult } from "@/types/strapi";
 import axios from "axios";
 
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-
-type NestedObject = Record<string, unknown>;
 
 function parseStrapiError(data: unknown): string | null {
   try {
@@ -127,7 +125,7 @@ export async function uploadImage(
 
   const res = await fetch(`${STRAPI_URL}/api/upload`, {
     method: "POST",
-    credentials: "include", // ensure cookies are sent/received
+    credentials: "include",
     headers: jwt ? { Authorization: `Bearer ${jwt}` } : undefined,
     body: form,
   });
@@ -157,7 +155,6 @@ export async function createPost(
   },
   jwt?: string
 ): Promise<Record<string, unknown>> {
-  type Body = { data: Record<string, unknown> };
   const body: Body = { data: { title, content: contentBlocks } };
 
   if (mediaId) {
