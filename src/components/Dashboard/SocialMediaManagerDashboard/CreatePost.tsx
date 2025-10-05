@@ -118,7 +118,20 @@ function CreatePost({
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      if (file.size > 200 * 1024) {
+                        alert("Image size must be less than 200KB");
+                        e.target.value = ""; // reset file input
+                        setImageFile(null);
+                        return;
+                      }
+                      setImageFile(file);
+                    } else {
+                      setImageFile(null);
+                    }
+                  }}
                 />
                 {imageFile && (
                   <div className="mt-2 text-sm">Selected: {imageFile.name}</div>
