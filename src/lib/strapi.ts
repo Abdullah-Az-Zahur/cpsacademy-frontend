@@ -1,4 +1,3 @@
-// src/lib/strapi.ts
 import axios from "axios";
 
 const STRAPI_URL =
@@ -50,6 +49,13 @@ function parseStrapiError(data: unknown): string | null {
   }
 }
 
+// Axios client configured to include credentials (cookies) for cross-site auth
+const axiosClient = axios.create({
+  baseURL: STRAPI_URL,
+  timeout: 10000,
+  withCredentials: true,
+});
+
 /** Register user */
 export async function registerUser(
   email: string,
@@ -58,11 +64,12 @@ export async function registerUser(
   roleType?: string
 ): Promise<Record<string, unknown>> {
   try {
-    const resp = await axios.post(
-      `${STRAPI_URL}/api/custom-register`,
-      { email, password, username, ...(roleType ? { roleType } : {}) },
-      { timeout: 10000 }
-    );
+    const resp = await axiosClient.post(`/api/custom-register`, {
+      email,
+      password,
+      username,
+      ...(roleType ? { roleType } : {}),
+    });
     return resp.data as Record<string, unknown>;
   } catch (err: unknown) {
     console.error("registerUser error full:", err);
@@ -92,11 +99,10 @@ export async function loginUser(
   password: string
 ): Promise<Record<string, unknown>> {
   try {
-    const resp = await axios.post(
-      `${STRAPI_URL}/api/custom-login`,
-      { email, password },
-      { timeout: 10000 }
-    );
+    const resp = await axiosClient.post(`/api/custom-login`, {
+      email,
+      password,
+    });
     return resp.data as Record<string, unknown>;
   } catch (err: unknown) {
     console.error("loginUser error full:", err);
@@ -130,6 +136,7 @@ export async function uploadImage(
 
   const res = await fetch(`${STRAPI_URL}/api/upload`, {
     method: "POST",
+    credentials: "include", // ensure cookies are sent/received
     headers: jwt ? { Authorization: `Bearer ${jwt}` } : undefined,
     body: form,
   });
@@ -168,6 +175,7 @@ export async function createPost(
 
   const res = await fetch(`${STRAPI_URL}/api/posts`, {
     method: "POST",
+    credentials: "include", // include cookies when creating posts
     headers: {
       "Content-Type": "application/json",
       ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
