@@ -17,12 +17,13 @@ import { NavItem } from "@/types/nav";
 import NavLink from "./NavLink";
 import { Button } from "@/components/ui/button";
 import { logout, useAuth } from "@/lib/auth";
+import logo from "../../../../public/images/logo/pngwing.com.png";
+import Image from "next/image";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user } = useAuth();
 
-  // Common nav items (always shown)
   const navItems: NavItem[] = [
     { label: "Home", href: "/" },
     {
@@ -41,9 +42,8 @@ const Header = () => {
     <div>
       <header className="w-full border-b bg-white shadow-sm">
         <div className="mx-auto flex container items-center justify-between px-4 py-3 md:py-4">
-          {/* Logo */}
-          <Link href="/" className="text-xl font-bold">
-            🚀 LMS Academy
+          <Link href="/" className="flex text-xl font-bold gap-2">
+            <Image src={logo} alt="logo" width={30} height={30} /> CPS Academy
           </Link>
 
           {/* Desktop Nav */}

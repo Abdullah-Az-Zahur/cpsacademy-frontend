@@ -31,10 +31,7 @@ const UserOverview = dynamic(
   () => import("@/components/Dashboard/NormalUserDashboard/UserOverview")
 );
 
-/**
- * MenuItemWithComponent: menu info + React component to render.
- * Component is typed as React.ComponentType<any> for flexibility.
- */
+
 type MenuItemWithComponent = {
   id: string;
   label: string;
