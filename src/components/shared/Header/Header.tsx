@@ -17,7 +17,8 @@ import { NavItem } from "@/types/nav";
 import NavLink from "./NavLink";
 import { Button } from "@/components/ui/button";
 import { logout, useAuth } from "@/lib/auth";
-import logo from "../../../../public/images/logo/pngwing.com.png";
+import logo from "../../../../public/images/logo/logo.png";
+import login from "../../../../public/images/logo/login.png";
 import Image from "next/image";
 
 const Header = () => {
@@ -93,7 +94,9 @@ const Header = () => {
               </Button>
             ) : (
               <>
-                <Link href="/login">Login</Link>
+                <Link href="/login">
+                  <Image src={login} alt="login" width={30} height={30} />
+                </Link>
               </>
             )}
           </div>
@@ -167,7 +170,7 @@ const Header = () => {
                         href="/login"
                         onClick={() => setMobileOpen(false)}
                       >
-                        Login
+                        <Image src={login} alt="login" width={30} height={30} />
                       </NavLink>
                     </li>
                   </>
