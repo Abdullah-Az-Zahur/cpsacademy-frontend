@@ -9,7 +9,6 @@ import Marquee from "../Marquee/Marquee";
 import { eventMarquee } from "@/data/eventMarquee";
 import { motion } from "framer-motion";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 

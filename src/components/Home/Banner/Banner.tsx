@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
-import banner1 from "../../../../public/images/banner/banner1.jpg";
+import banner1 from "../../../../public/images/banner/banner-image.png";
 import rectangle from "../../../../public/images/banner/Rectangle.png";
 
 import Link from "next/link";
@@ -21,7 +21,7 @@ const Banner: React.FC = () => {
   };
 
   return (
-    <div className="w-full overflow-hidden mt-5">
+    <div className="w-full overflow-hidden">
       <motion.section
         className="flex flex-col md:flex-row gap-8 md:gap-10 px-4 md:px-8 lg:px-12 xl:px-16"
         variants={containerStagger}
@@ -105,7 +105,7 @@ const Banner: React.FC = () => {
           <Image
             src={banner1}
             alt="Banner"
-            className="w-full h-auto max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg shadow-lg"
+            className="w-full h-auto max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl rounded-lg "
             style={{
               width: "100%",
               height: "auto",
