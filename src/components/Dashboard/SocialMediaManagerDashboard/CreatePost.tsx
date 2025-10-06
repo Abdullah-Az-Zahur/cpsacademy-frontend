@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/lib/auth";
-import { createPost, uploadImage } from "@/lib/strapi";
+import { createPost, uploadImageAxios } from "@/lib/strapi";
 import React, { useState } from "react";
 
 type TextNode = { type: "text"; text: string };
@@ -32,7 +32,7 @@ function CreatePost({
       let mediaId: number | null = null;
 
       if (imageFile) {
-        const uploaded: unknown = await uploadImage(
+        const uploaded: unknown = await uploadImageAxios(
           imageFile,
           jwt ?? undefined
         );
