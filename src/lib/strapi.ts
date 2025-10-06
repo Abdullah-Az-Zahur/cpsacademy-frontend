@@ -1,18 +1,10 @@
-// lib/strapi.ts
 import axios from "axios";
 import { Body, ContentBlock, NestedObject, UploadResult } from "@/types/strapi";
 
-/**
- * Normalize STRAPI_URL (no trailing slash)
- */
 export const STRAPI_URL: string = (
   process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"
 ).replace(/\/$/, "");
 
-/**
- * Parse Strapi-style error payloads into a readable string.
- * Keeps using NestedObject for flexible JSON shapes.
- */
 export function parseStrapiError(data: unknown): string | null {
   try {
     if (!data) return null;
@@ -47,19 +39,12 @@ export function parseStrapiError(data: unknown): string | null {
   }
 }
 
-/**
- * Axios client configured to include credentials (cookies) for cross-site auth
- */
 export const axiosClient = axios.create({
   baseURL: STRAPI_URL,
   timeout: 10000,
   withCredentials: true,
 });
 
-/**
- * Type guard: is this value an UploadResult-like object?
- * We check for common fields returned by Strapi upload items (id, url or formats).
- */
 function isUploadResult(value: unknown): value is UploadResult {
   if (!value || typeof value !== "object") return false;
   const v = value as Record<string, unknown>;
@@ -70,10 +55,6 @@ function isUploadResult(value: unknown): value is UploadResult {
   );
 }
 
-/**
- * Normalize an individual media path or absolute URL to an absolute URL.
- * Accepts relative URL ("/uploads/xxx.png") or absolute ("https://...").
- */
 function normalizeMediaUrl(url: string): string {
   // If already absolute (http(s) or protocol-relative), return as-is
   if (/^(https?:)?\/\//i.test(url)) return url;
@@ -84,29 +65,18 @@ function normalizeMediaUrl(url: string): string {
   return `${STRAPI_URL}${path}`;
 }
 
-/**
- * Convert a Strapi media object or a raw string into an absolute URL.
- *
- * media: string | UploadResult | null
- * preferredFormats: Order to try when picking a format from media.formats
- *
- * Returns: absolute url string or null when not available
- */
 export function getStrapiMediaUrl(
   media?: string | UploadResult | null,
   preferredFormats: string[] = ["medium", "large", "small", "thumbnail"]
 ): string | null {
   if (!media) return null;
 
-  // if passed a raw string (maybe already a URL or a relative path)
   if (typeof media === "string") {
     return normalizeMediaUrl(media);
   }
 
-  // now media is UploadResult-like; use type guard to be safe
   if (!isUploadResult(media)) return null;
 
-  // Try preferred formats in order (safe access)
   const formats = (
     media as UploadResult & { formats?: Record<string, { url?: string }> }
   ).formats;
@@ -127,16 +97,12 @@ export function getStrapiMediaUrl(
   return null;
 }
 
-/**
- * Upload an image using axios (Strapi v4 style).
- * Returns the first UploadResult from the array that Strapi returns.
- */
 export async function uploadImageAxios(
   file: File,
   jwt?: string
 ): Promise<UploadResult> {
   const form = new FormData();
-  // Strapi's upload endpoint typically accepts "files" (plural) as the field name.
+
   form.append("files", file);
 
   try {
@@ -148,18 +114,15 @@ export async function uploadImageAxios(
       withCredentials: true,
     });
 
-    // Strapi returns an array of uploaded items
     const data = resp.data;
     if (Array.isArray(data) && data.length > 0 && isUploadResult(data[0])) {
       return data[0] as UploadResult;
     }
 
-    // If it's a single object and matches UploadResult, return it
     if (isUploadResult(data)) {
       return data as UploadResult;
     }
 
-    // Otherwise throw a helpful error
     throw new Error("Unexpected upload response from Strapi");
   } catch (err: unknown) {
     let msg = "Image upload failed";
@@ -171,11 +134,6 @@ export async function uploadImageAxios(
     throw new Error(msg);
   }
 }
-
-/**
- * Existing functions: registerUser, loginUser, createPost, etc.
- * (I keep the same shapes you already had but type them with safer types.)
- */
 
 /** Register user */
 export async function registerUser(
@@ -247,7 +205,7 @@ export async function loginUser(
   }
 }
 
-/** Upload using fetch (keeps your original behavior as an alternative) */
+/** Upload using fetch  */
 export async function uploadImageFetch(
   file: File,
   jwt?: string
@@ -299,7 +257,7 @@ export async function createPost(
 
   const res = await fetch(`${STRAPI_URL}/api/posts`, {
     method: "POST",
-    credentials: "include", // include cookies when creating posts
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),

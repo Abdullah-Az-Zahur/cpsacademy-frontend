@@ -111,7 +111,7 @@ function CreatePost({
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium">
                   Image (optional)
                 </label>
@@ -136,7 +136,7 @@ function CreatePost({
                 {imageFile && (
                   <div className="mt-2 text-sm">Selected: {imageFile.name}</div>
                 )}
-              </div>
+              </div> */}
 
               <div className="flex items-center gap-2">
                 <button
