@@ -1,11 +1,12 @@
 import React from "react";
-import image1 from "../../../../public/images/banner/banner1.jpg";
 import Image from "next/image";
+import image1 from "../../../../public/images/home/Subtract.png";
+import image2 from "../../../../public/images/home/Subtract-1.png";
+import image3 from "../../../../public/images/home/Subtract-2.png";
 
 const VideoTutorials = () => {
   return (
     <div className="grid md:grid-cols-3 grid-cols-1 gap-5 mx-2">
-      {/* First Card */}
       <div className="flex flex-col">
         <Image
           src={image1}
@@ -23,9 +24,7 @@ const VideoTutorials = () => {
         </div>
       </div>
 
-      {/* Second Card (responsive order swap) */}
       <div className="flex md:flex-col flex-col-reverse">
-        {/* Text */}
         <div className="mt-5 w-5/6">
           <p className="text-2xl font-bold">Video Tutorials</p>
           <p className="text-gray-400">
@@ -33,9 +32,9 @@ const VideoTutorials = () => {
             Reiciendis, laudantium.
           </p>
         </div>
-        {/* Image */}
+
         <Image
-          src={image1}
+          src={image2}
           alt="image 1"
           height={400}
           width={400}
@@ -43,10 +42,9 @@ const VideoTutorials = () => {
         />
       </div>
 
-      {/* Third Card */}
       <div className="flex flex-col">
         <Image
-          src={image1}
+          src={image3}
           alt="image 1"
           height={400}
           width={400}
