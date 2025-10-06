@@ -21,19 +21,17 @@ const Banner: React.FC = () => {
   };
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full overflow-hidden mt-5">
       <motion.section
         className="flex flex-col md:flex-row gap-8 md:gap-10 px-4 md:px-8 lg:px-12 xl:px-16"
         variants={containerStagger}
         initial="hidden"
         animate="visible"
       >
-        {/* Left Content - Order changes on mobile */}
         <motion.div
           className="md:w-1/2 font-bold my-auto order-1 md:order-1 mt-5"
           variants={slideInLeft}
         >
-          {/* First div */}
           <motion.div className="flex flex-col" variants={containerStagger}>
             <motion.div className="flex space-x-2 w-full" variants={fadeInUp}>
               <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl my-auto">
@@ -78,7 +76,7 @@ const Banner: React.FC = () => {
             className="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mt-4"
             variants={fadeInUp}
           >
-            LMS Project
+            CPY Academy
           </motion.p>
           <motion.div className="mt-6 md:mt-10" variants={fadeInUp}>
             <SearchBar
@@ -100,7 +98,6 @@ const Banner: React.FC = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right Image - Order changes on mobile */}
         <motion.div
           className="md:w-1/2 order-2 md:order-2 flex items-center justify-center mt-6 md:mt-0"
           variants={slideRight}
