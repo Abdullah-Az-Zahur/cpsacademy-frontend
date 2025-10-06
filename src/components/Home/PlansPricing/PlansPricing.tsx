@@ -12,14 +12,12 @@ import ToggleButtonGroup from "@/components/ui/toggle-button-group";
 import ToggleSwitch from "@/components/ui/toggle-switch";
 import { plansMarquee } from "@/data/plansMarquee";
 
-
 const PlansPricing: React.FC = () => {
   const [planType, setPlanType] = useState<PlanType>("individual");
   const [isAnnual, setIsAnnual] = useState(false);
 
   const billingCycle: BillingCycle = isAnnual ? "yearly" : "monthly";
 
-  // Sort plans by tier: starter -> professional -> enterprise
   const sortedPlans = [...plans].sort((a, b) => {
     const tierOrder = { starter: 0, professional: 1, enterprise: 2 };
     return tierOrder[a.planTier] - tierOrder[b.planTier];
@@ -57,17 +55,14 @@ const PlansPricing: React.FC = () => {
             disabledLabel="Monthly"
           />
 
-          {/* Best Opportunity badge - visible for all plans */}
           <div className="mt-8 -mb-4 relative z-10">
             <div className="bg-primary text-white text-sm font-semibold px-6 py-2 rounded-full shadow-lg">
               Best Opportunity - Save up to 30% with yearly billing
             </div>
           </div>
 
-          {/* Single glass card container with 3 columns */}
           <div className="mt-8 w-full">
             <div className="bg-white/20 backdrop-blur-md rounded-2xl p-8 border border-white/30 shadow-xl relative overflow-hidden">
-              {/* Glass effect overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
 
               <AnimatePresence mode="wait">
@@ -99,7 +94,6 @@ const PlansPricing: React.FC = () => {
             </div>
           </div>
 
-          {/* Additional information */}
           <div className="mt-8 text-center text-sm text-gray-500">
             <p>
               All plans come with a 14-day free trial. No credit card required.

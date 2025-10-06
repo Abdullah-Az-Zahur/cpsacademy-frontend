@@ -36,7 +36,7 @@ function CreatePost({
           imageFile,
           jwt ?? undefined
         );
-        // safely narrow to an object that may have numeric id
+
         if (
           uploaded &&
           typeof (uploaded as Record<string, unknown>).id === "number"
@@ -45,7 +45,6 @@ function CreatePost({
         }
       }
 
-      // build simple block structure (paragraphs)
       const contentBlocks = buildContentFromText(text);
 
       const created = await createPost(
@@ -60,7 +59,6 @@ function CreatePost({
       setOpen(false);
       console.log("Created post:", created);
     } catch (err: unknown) {
-      // narrow unknown to Error for a safe message
       const msg = err instanceof Error ? err.message : String(err);
       console.error(err);
       setMessage(msg || "Failed to create post");
@@ -111,33 +109,6 @@ function CreatePost({
                 />
               </div>
 
-              {/* <div>
-                <label className="block text-sm font-medium">
-                  Image (optional)
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      if (file.size > 200 * 1024) {
-                        alert("Image size must be less than 200KB");
-                        e.target.value = ""; // reset file input
-                        setImageFile(null);
-                        return;
-                      }
-                      setImageFile(file);
-                    } else {
-                      setImageFile(null);
-                    }
-                  }}
-                />
-                {imageFile && (
-                  <div className="mt-2 text-sm">Selected: {imageFile.name}</div>
-                )}
-              </div> */}
-
               <div className="flex items-center gap-2">
                 <button
                   type="submit"
@@ -162,7 +133,6 @@ function CreatePost({
         </div>
       )}
 
-      {/* Placeholder for SMM main content */}
       <section className="mt-6">
         <p>
           Use the button above (or the sidebar Create Post option) to make

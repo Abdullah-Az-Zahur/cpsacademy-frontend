@@ -7,9 +7,6 @@ import Link from "next/link";
 import ModuleCard from "./ModuleCard/ModuleCard";
 import CategoryFilter from "@/components/common/CategoryFilter/CategoryFilter";
 
-/**
- * ModuleList - main page section
- */
 const ModuleList: React.FC = () => {
   const [modules, setModules] = useState<ModuleItem[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string>("all");
@@ -39,17 +36,14 @@ const ModuleList: React.FC = () => {
         );
         setModules(items);
       } catch (err: unknown) {
-        // narrow the unknown — DOMException is thrown by AbortController in the browser
         if (err instanceof DOMException && err.name === "AbortError") return;
 
-        // If you want safe access to Error properties, check `err instanceof Error`
         if (err instanceof Error) {
           console.error("Failed to fetch modules:", err.message);
         } else {
-          // fallback for anything else
           console.error("Failed to fetch modules:", err);
         }
-        // Set empty array on error
+
         setModules([]);
       } finally {
         if (typeof setLoading === "function") setLoading(false);
@@ -60,7 +54,6 @@ const ModuleList: React.FC = () => {
     return () => ac.abort();
   }, [setLoading]);
 
-  // unique course titles -> categories
   const allCourses = useMemo(() => {
     const s = new Set<string>();
     modules.forEach((m) => {
@@ -69,13 +62,11 @@ const ModuleList: React.FC = () => {
     return Array.from(s).sort();
   }, [modules]);
 
-  // filter modules by selected course
   const filteredModules = useMemo(() => {
     if (selectedCourse === "all") return modules;
     return modules.filter((m) => m.course?.title === selectedCourse);
   }, [modules, selectedCourse]);
 
-  // developer-only check
   const isDeveloper = !!user && user.role === "developer";
 
   if (loading)
@@ -98,7 +89,6 @@ const ModuleList: React.FC = () => {
     );
   }
 
-  // Show coming soon if no modules available
   if (modules.length === 0) {
     return (
       <section className="px-4 py-12 container mx-auto">

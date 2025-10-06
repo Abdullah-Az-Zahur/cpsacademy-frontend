@@ -13,7 +13,6 @@ const Classes: React.FC = () => {
 
   const { user, loading, setLoading } = useAuth();
 
-  // Fetch classes from Strapi
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -32,14 +31,12 @@ const Classes: React.FC = () => {
     fetchClasses();
   }, [setLoading]);
 
-  // Extract unique modules for filter
   const allModules = useMemo(() => {
     const modulesSet = new Set<string>();
     classes.forEach((cls) => modulesSet.add(cls.module.title));
     return Array.from(modulesSet).sort();
   }, [classes]);
 
-  // Filter classes by selected module
   const filteredClasses = useMemo(() => {
     if (selectedModule === "all") return classes;
     return classes.filter((cls) => cls.module.title === selectedModule);
@@ -66,7 +63,6 @@ const Classes: React.FC = () => {
     );
   }
 
-  // Show coming soon if no classes available
   if (classes.length === 0) {
     return (
       <section className="px-4 py-12 container mx-auto">

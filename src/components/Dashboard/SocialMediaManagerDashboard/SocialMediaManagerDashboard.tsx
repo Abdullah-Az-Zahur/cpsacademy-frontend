@@ -7,7 +7,6 @@ function SocialMediaManagerDashboard() {
   const { user, loading } = useAuth();
   const [activeComponent] = useState("home");
 
-  // Map component keys to actual components
   const componentMap: Record<string, React.ReactNode> = {
     home: (
       <div>
@@ -26,7 +25,6 @@ function SocialMediaManagerDashboard() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Main Content */}
       <main className="flex-1 p-6">
         {componentMap[activeComponent] || componentMap.home}
       </main>

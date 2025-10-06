@@ -15,7 +15,6 @@ const MobileApp = () => {
           modi!
         </p>
         <div className="flex flex-wrap gap-3 sm:gap-4 justify-center items-center mt-6 md:mt-8">
-          {/* App Store Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -31,7 +30,6 @@ const MobileApp = () => {
             />
           </motion.button>
 
-          {/* Google Play Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

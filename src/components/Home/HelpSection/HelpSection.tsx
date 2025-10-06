@@ -5,7 +5,7 @@ import React from "react";
 const HelpSection = () => {
   return (
     <div className="flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-20 xl:gap-24 px-4 sm:px-6 lg:px-8">
-      {/* Heading Section */}
+      
       <div className="md:flex-1">
         <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
           We&apos;re here to help you cultivate your most empowered{" "}
@@ -13,7 +13,7 @@ const HelpSection = () => {
         </h3>
       </div>
 
-      {/* Content Section */}
+      
       <div className="md:flex-1 flex flex-col justify-between">
         <p className="text-gray-600 text-base sm:text-lg md:text-xl mb-6 md:mb-0">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ab

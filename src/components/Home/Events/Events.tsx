@@ -51,17 +51,16 @@ const Events = () => {
               },
             }}
             loop={true}
-            speed={700} // smooth slide transition (ms)
+            speed={700}
             autoplay={{
-              delay: 3000, // time between slides (ms)
-              disableOnInteraction: false, // keep autoplay after user interactions
-              pauseOnMouseEnter: true, // pause when the user hovers
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
             className="rounded-2xl"
           >
             {events.map((event) => (
               <SwiperSlide key={event.id}>
-                {/* use framer-motion to add a subtle fade/slide-in per slide */}
                 <motion.div
                   className="p-1"
                   initial={{ opacity: 0, y: 8 }}

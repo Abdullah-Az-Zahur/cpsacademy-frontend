@@ -23,7 +23,7 @@ const ClassCard: React.FC<{ cls: ClassItem }> = ({ cls }) => {
             alt={cls.title || "class thumbnail"}
             fill
             className="object-cover"
-            // ensure img.youtube.com and your Strapi host are whitelisted in next.config.js
+            
           />
         ) : (
           <div className="flex items-center justify-center text-xs text-gray-500">No thumbnail</div>

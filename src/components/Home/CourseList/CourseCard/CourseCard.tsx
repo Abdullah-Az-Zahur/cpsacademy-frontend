@@ -18,16 +18,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
     "";
 
   const shortDesc =
-    course.shortDescription?.map((block) =>
-      block.children?.map((child) => child.text).join(" ")
-    ).join(" ") || "";
+    course.shortDescription
+      ?.map((block) => block.children?.map((child) => child.text).join(" "))
+      .join(" ") || "";
 
   return (
     <motion.div
       whileHover={{ y: -3 }}
       className="bg-white rounded-lg shadow-sm overflow-hidden transition-shadow cursor-pointer"
     >
-      {/* Cover Image */}
       {imageUrl && (
         <div className="relative h-48 w-full">
           <Image
@@ -39,9 +38,10 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       )}
 
-      {/* Course Info */}
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-2">{course.title || "Untitled Course"}</h3>
+        <h3 className="text-lg font-semibold mb-2">
+          {course.title || "Untitled Course"}
+        </h3>
 
         <p className="text-sm text-gray-700 mb-2 line-clamp-3">{shortDesc}</p>
 

@@ -15,7 +15,7 @@ const SocialPosts: React.FC = () => {
           `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/posts?populate=*&sort=createdAt:desc`
         );
         const data = await res.json();
-        // Sort by createdAt descending (in case backend doesn't)
+       
         const sortedPosts = (data.data || []).sort(
           (a: PostItem, b: PostItem) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
